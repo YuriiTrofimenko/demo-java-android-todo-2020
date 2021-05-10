@@ -27,7 +27,7 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
     private int itemLayout;
     private List<TodoItem> items;
     private Context context;
-    private ITodoDao todoDao = new InMemoryTodoDao();
+    private ITodoDao todoDao = Global.todoDao;
 
     // конструктор, который принимает ссылку на активити, дескриптор представления,
     // список моделей данных
@@ -99,6 +99,7 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
                 // в зависимости от того, выбрал пользователь чекбокс (true)
                 // или снял выделение (false)
                 item.setDone(b);
+                todoDao.save(item);
                 TodoListAdapter.this.notifyDataSetChanged();
             }
         });

@@ -4,6 +4,7 @@
     package="org.tyaa.demo.java.android.mytodolist">
 
     <application
+        android:name="com.orm.SugarApp"
         tools:replace="android:icon"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

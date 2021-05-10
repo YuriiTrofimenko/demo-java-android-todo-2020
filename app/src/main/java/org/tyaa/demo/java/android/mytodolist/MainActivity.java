@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int FORM_ACTIVITY_REQUEST_CODE = 0;
 
     private TodoListAdapter adapter = null;
-    private ITodoDao todoDao = new InMemoryTodoDao();
+    private ITodoDao todoDao = Global.todoDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
         // заполнение списка моделей данных двумя демонстрационными объектами
         // Global.items.add(new TodoItem("Task 1", "Nunc dapibus vestibulum odio, vitae pellentesque ipsum lobortis varius"));
         // Global.items.add(new TodoItem("Task 2", "Suspendisse sit amet est ut libero pulvinar cursus auctor at justo. In aliquet arcu imperdiet, cursus augue ut, lobortis tellus."));
-        todoDao.save(new TodoItem("Task 1", "Nunc dapibus vestibulum odio, vitae pellentesque ipsum lobortis varius"));
-        todoDao.save(new TodoItem("Task 2", "Suspendisse sit amet est ut libero pulvinar cursus auctor at justo. In aliquet arcu imperdiet, cursus augue ut, lobortis tellus."));
+        if (todoDao.findAll().size() == 0) {
+            todoDao.save(new TodoItem("Task 1", "Nunc dapibus vestibulum odio, vitae pellentesque ipsum lobortis varius"));
+            todoDao.save(new TodoItem("Task 2", "Suspendisse sit amet est ut libero pulvinar cursus auctor at justo. In aliquet arcu imperdiet, cursus augue ut, lobortis tellus."));
+        }
         // пользовательский соединитель представления со списком данных
         adapter =
                 // new TodoListAdapter(this, R.layout.todo_list_item, Global.items);

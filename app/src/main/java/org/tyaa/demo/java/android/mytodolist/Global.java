@@ -6,4 +6,5 @@ import java.util.List;
 public class Global {
     // список моделей данных
     public static List<TodoItem> items = new ArrayList<>();
+    public static ITodoDao todoDao = new SugarOrmTodoDao();
 }

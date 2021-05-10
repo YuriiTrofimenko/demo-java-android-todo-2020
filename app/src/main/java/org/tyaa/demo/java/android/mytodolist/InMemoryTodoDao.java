@@ -16,7 +16,11 @@ public class InMemoryTodoDao implements ITodoDao {
 
     @Override
     public void save(TodoItem item) {
-        Global.items.add(item);
+        try {
+            findById(item.getId());
+        } catch (Exception ex) {
+            Global.items.add(item);
+        }
     }
 
     @Override

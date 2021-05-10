@@ -23,7 +23,7 @@ public class FormActivity extends AppCompatActivity {
     private TodoItem currentTodoItem = null;
     private String selectedDateString =
             new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-    private ITodoDao todoDao = new InMemoryTodoDao();
+    private ITodoDao todoDao = Global.todoDao;
 
     // вызывается автоматически каждый раз, когда создается экземпляр активити
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -98,6 +98,7 @@ public class FormActivity extends AppCompatActivity {
                     currentTodoItem.setTitle(titleEditText.getText().toString());
                     currentTodoItem.setDescription(descriptionEditText.getText().toString());
                     currentTodoItem.setDate(selectedDateString);
+                    todoDao.save(currentTodoItem);
                 }
                 // установит код положительного завершения активити
                 setResult(RESULT_OK);

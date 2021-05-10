@@ -31,6 +31,10 @@ public class TodoItem extends SugarRecord {
     // дата, на которую запланировано выполнение задачи
     private String date;
 
+    // согласно требований Sugar
+    public TodoItem() {
+    }
+
     // конструктор объекта модели задачи
     public TodoItem(String title, String description) {
         // сохранение (копирование) значений аргументов в поля объекта модели задачи
