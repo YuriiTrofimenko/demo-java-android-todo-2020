@@ -27,6 +27,7 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
     private int itemLayout;
     private List<TodoItem> items;
     private Context context;
+    private ITodoDao todoDao = new InMemoryTodoDao();
 
     // конструктор, который принимает ссылку на активити, дескриптор представления,
     // список моделей данных
@@ -143,7 +144,8 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
                                 // когда пользователь подтвердил действие,
                                 // вызываем на списке моделей метод удаления,
                                 // передавая ему аргумент - ссылку на текущий объект модели item
-                                Global.items.remove(item);
+                                // Global.items.remove(item);
+                                todoDao.delete(item);
                                 // издание события,
                                 // которое приводит к перерисовке списка адаптером
                                 TodoListAdapter.this.notifyDataSetChanged();

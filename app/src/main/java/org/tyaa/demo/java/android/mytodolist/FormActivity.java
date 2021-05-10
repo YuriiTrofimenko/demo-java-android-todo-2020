@@ -23,6 +23,7 @@ public class FormActivity extends AppCompatActivity {
     private TodoItem currentTodoItem = null;
     private String selectedDateString =
             new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+    private ITodoDao todoDao = new InMemoryTodoDao();
 
     // вызывается автоматически каждый раз, когда создается экземпляр активити
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -57,22 +58,18 @@ public class FormActivity extends AppCompatActivity {
             Long editedItemId = intent.getLongExtra("editedItemId", 0L);
             if (!editedItemId.equals(0L)) {
                 // найти по ИД модель из списка
-                for (TodoItem item : Global.items) {
-                    if (item.getId() == editedItemId) {
-                        currentTodoItem = item;
-                        // заполнить виджеты ввода данных из текущей модели
-                        titleEditText.setText(currentTodoItem.getTitle());
-                        descriptionEditText.setText(currentTodoItem.getDescription());
-                        try {
-                            calendarView.setDate(
-                                    new SimpleDateFormat("dd.MM.yyyy")
-                                            .parse(currentTodoItem.getDate())
-                                            .getTime()
-                            );
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                currentTodoItem = todoDao.findById(editedItemId);
+                // заполнить виджеты ввода данных из текущей модели
+                titleEditText.setText(currentTodoItem.getTitle());
+                descriptionEditText.setText(currentTodoItem.getDescription());
+                try {
+                    calendarView.setDate(
+                            new SimpleDateFormat("dd.MM.yyyy")
+                                    .parse(currentTodoItem.getDate())
+                                    .getTime()
+                    );
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -90,7 +87,7 @@ public class FormActivity extends AppCompatActivity {
                     // и передаем как аргумент конструктора модели задачи
                     Log.d("MyTag 0: date", new SimpleDateFormat("dd.MM.yyyy")
                             .format(new Date(calendarView.getDate())));
-                    Global.items.add(
+                    todoDao.save(
                             new TodoItem(
                                     titleEditText.getText().toString(),
                                     descriptionEditText.getText().toString(),

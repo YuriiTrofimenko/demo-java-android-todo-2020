@@ -20,7 +20,7 @@ public class InMemoryTodoDao implements ITodoDao {
     }
 
     @Override
-    public void delete(Long id) {
-        Global.items.remove(id);
+    public void delete(TodoItem todoItem) {
+        Global.items.remove(todoItem);
     }
 }
